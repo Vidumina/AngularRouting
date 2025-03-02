@@ -23,6 +23,7 @@ namespace AngularRouting
         [WebMethod]
         public void GetAllStudents()
         {
+            //System.Threading.Thread.Sleep(2000);
             List<Student> listStudents = new List<Student>();
 
             string cs = ConfigurationManager.ConnectionStrings["CS"].ConnectionString;
@@ -46,6 +47,37 @@ namespace AngularRouting
             Context.Response.Write(js.Serialize(listStudents));
         }
 
+        [WebMethod]
+        public void GetStudentsByName(string name)
+        {
+            List<Student> listStudents = new List<Student>();
+
+            string cs = ConfigurationManager.ConnectionStrings["CS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("Select * from tblStudents where name like @name", con);
+                SqlParameter param = new SqlParameter(){
+                    ParameterName = "@name",
+                    Value=name +"%"
+                
+                };
+                cmd.Parameters.Add(param);
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Student student = new Student();
+                    student.id = Convert.ToInt32(rdr["Id"]);
+                    student.name = rdr["Name"].ToString();
+                    student.gender = rdr["Gender"].ToString();
+                    student.city = rdr["City"].ToString();
+                    listStudents.Add(student);
+                }
+            }
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(listStudents));
+        }
 
 
         [WebMethod]
@@ -77,6 +109,44 @@ namespace AngularRouting
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             Context.Response.Write(js.Serialize(student));
+        }
+
+
+
+
+        [WebMethod]
+        public void GetStudentTotals()
+        {
+            studentTotals totals = new studentTotals();
+
+            string cs = ConfigurationManager.ConnectionStrings["CS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("Select COALESCE(Gender,'GrandTotal') AS Gender, COUNT(*) AS Total FROM tblStudents GROUP BY ROLLUP(Gender)", con);
+               
+
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    switch (rdr["Gender"].ToString())
+                    {
+                        case "Male":
+                            totals.males = Convert.ToInt32(rdr["Total"]);
+                            break;
+                        case "Female":
+                            totals.females = Convert.ToInt32(rdr["Total"]);
+                            break;
+                        default:
+                            totals.total = Convert.ToInt32(rdr["Total"]);
+
+                            break;
+                    }
+                }
+            }
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(totals));
         }
     }
 }

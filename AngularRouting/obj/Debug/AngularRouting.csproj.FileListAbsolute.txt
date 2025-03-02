@@ -52,8 +52,8 @@ C:\Users\acer\source\repos\AngularRouting\AngularRouting\bin\roslyn\VBCSCompiler
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.csproj.AssemblyReference.cache
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.csproj.CoreCompileInputs.cache
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.csproj.CopyComplete
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.dll
 C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.pdb
+C:\Users\acer\source\repos\AngularRouting\AngularRouting\obj\Debug\AngularRouting.csproj.AssemblyReference.cache
